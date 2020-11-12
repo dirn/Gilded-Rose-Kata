@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Type, Union
 
 
 @dataclass
@@ -65,41 +65,32 @@ class Backstage:
         self.quality = min(self.quality, 50)
 
 
-@dataclass
 class GildedRose:
-    name: str
-    _quality: int
-    _days_remaining: int
-
-    def __post_init__(self) -> None:
-        self.item: Optional[Union[Normal, Brie, Sulfuras, Backstage]] = None
+    def __init__(self, name: str, quality: int, days_remaining: int) -> None:
+        self.name = name
+        self.item = self.class_for(name)(quality, days_remaining)
 
     @property
     def quality(self) -> int:
-        return getattr(self.item, "quality", self._quality)
-
-    @quality.setter
-    def quality(self, value: int) -> None:
-        self._quality = value
+        return self.item.quality
 
     @property
     def days_remaining(self) -> int:
-        return getattr(self.item, "days_remaining", self._days_remaining)
-
-    @days_remaining.setter
-    def days_remaining(self, value: int) -> None:
-        self._days_remaining = value
+        return self.item.days_remaining
 
     def tick(self) -> None:
+        return self.item.tick()
+
+    def class_for(self, name: str) -> Type[Union[Normal, Brie, Sulfuras, Backstage]]:
         if self.name == "normal":
-            self.item = Normal(self.quality, self.days_remaining)
-            return self.item.tick()
+            return Normal
         elif self.name == "Aged Brie":
-            self.item = Brie(self.quality, self.days_remaining)
-            return self.item.tick()
+            return Brie
         elif self.name == "Sulfuras, Hand of Ragnaros":
-            self.item = Sulfuras(self.quality, self.days_remaining)
-            return self.item.tick()
+            return Sulfuras
         elif self.name == "Backstage passes to a TAFKAL80ETC concert":
-            self.item = Backstage(self.quality, self.days_remaining)
-            return self.item.tick()
+            return Backstage
+        else:
+            # This mostly exists to make mypy happy due to an otherwise
+            # missing return.
+            raise ValueError(f"{name} is not a valid item type")
