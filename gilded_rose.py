@@ -92,26 +92,14 @@ class GildedRose:
 
     def tick(self) -> None:
         if self.name == "normal":
-            return self.normal_tick()
+            self.item = Normal(self.quality, self.days_remaining)
+            return self.item.tick()
         elif self.name == "Aged Brie":
-            return self.brie_tick()
+            self.item = Brie(self.quality, self.days_remaining)
+            return self.item.tick()
         elif self.name == "Sulfuras, Hand of Ragnaros":
-            return self.sulfuras_tick()
+            self.item = Sulfuras(self.quality, self.days_remaining)
+            return self.item.tick()
         elif self.name == "Backstage passes to a TAFKAL80ETC concert":
-            return self.backstage_tick()
-
-    def normal_tick(self) -> None:
-        self.item = Normal(self.quality, self.days_remaining)
-        return self.item.tick()
-
-    def brie_tick(self) -> None:
-        self.item = Brie(self.quality, self.days_remaining)
-        return self.item.tick()
-
-    def sulfuras_tick(self) -> None:
-        self.item = Sulfuras(self.quality, self.days_remaining)
-        return self.item.tick()
-
-    def backstage_tick(self) -> None:
-        self.item = Backstage(self.quality, self.days_remaining)
-        return self.item.tick()
+            self.item = Backstage(self.quality, self.days_remaining)
+            return self.item.tick()
