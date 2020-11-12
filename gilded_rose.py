@@ -8,6 +8,9 @@ class GildedRose:
     days_remaining: int
 
     def tick(self) -> None:
+        if self.name == "normal":
+            return self.normal_tick()
+
         if (
             self.name != "Aged Brie"
             and self.name != "Backstage passes to a TAFKAL80ETC concert"
@@ -38,3 +41,12 @@ class GildedRose:
             else:
                 if self.quality < 50:
                     self.quality += 1
+
+    def normal_tick(self) -> None:
+        self.days_remaining -= 1
+        if self.quality == 0:
+            return
+
+        self.quality -= 1
+        if self.days_remaining <= 0:
+            self.quality -= 1
