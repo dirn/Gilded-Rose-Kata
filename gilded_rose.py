@@ -35,13 +35,22 @@ class Brie:
 
 
 @dataclass
+class Sulfuras:
+    quality: int
+    days_remaining: int
+
+    def tick(self) -> None:
+        ...
+
+
+@dataclass
 class GildedRose:
     name: str
     _quality: int
     _days_remaining: int
 
     def __post_init__(self) -> None:
-        self.item: Optional[Union[Normal, Brie]] = None
+        self.item: Optional[Union[Normal, Brie, Sulfuras]] = None
 
     @property
     def quality(self) -> int:
@@ -78,7 +87,8 @@ class GildedRose:
         return self.item.tick()
 
     def sulfuras_tick(self) -> None:
-        ...
+        self.item = Sulfuras(self.quality, self.days_remaining)
+        return self.item.tick()
 
     def backstage_tick(self) -> None:
         self.days_remaining -= 1
