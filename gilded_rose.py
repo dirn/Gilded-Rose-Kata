@@ -44,13 +44,35 @@ class Sulfuras:
 
 
 @dataclass
+class Backstage:
+    quality: int
+    days_remaining: int
+
+    def tick(self) -> None:
+        self.days_remaining -= 1
+        if self.days_remaining < 0:
+            self.quality = 0
+            return
+        if self.quality >= 50:
+            return
+
+        self.quality += 1
+        if self.days_remaining < 10:
+            self.quality += 1
+        if self.days_remaining < 5:
+            self.quality += 1
+
+        self.quality = min(self.quality, 50)
+
+
+@dataclass
 class GildedRose:
     name: str
     _quality: int
     _days_remaining: int
 
     def __post_init__(self) -> None:
-        self.item: Optional[Union[Normal, Brie, Sulfuras]] = None
+        self.item: Optional[Union[Normal, Brie, Sulfuras, Backstage]] = None
 
     @property
     def quality(self) -> int:
@@ -91,17 +113,5 @@ class GildedRose:
         return self.item.tick()
 
     def backstage_tick(self) -> None:
-        self.days_remaining -= 1
-        if self.days_remaining < 0:
-            self.quality = 0
-            return
-        if self.quality >= 50:
-            return
-
-        self.quality += 1
-        if self.days_remaining < 10:
-            self.quality += 1
-        if self.days_remaining < 5:
-            self.quality += 1
-
-        self.quality = min(self.quality, 50)
+        self.item = Backstage(self.quality, self.days_remaining)
+        return self.item.tick()
