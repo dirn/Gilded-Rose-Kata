@@ -12,6 +12,8 @@ class GildedRose:
             return self.normal_tick()
         elif self.name == "Aged Brie":
             return self.brie_tick()
+        elif self.name == "Sulfuras, Hand of Ragnaros":
+            return self.sulfuras_tick()
 
         if (
             self.name != "Aged Brie"
@@ -63,3 +65,6 @@ class GildedRose:
             self.quality += 1
 
         self.quality = min(self.quality, 50)
+
+    def sulfuras_tick(self) -> None:
+        ...
