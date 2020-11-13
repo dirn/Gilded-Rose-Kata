@@ -35,10 +35,6 @@ class Brie(Item):
         self.quality = min(self.quality, 50)
 
 
-class Sulfuras(Item):
-    ...
-
-
 class Backstage(Item):
     def tick(self) -> None:
         self.days_remaining -= 1
@@ -79,7 +75,7 @@ class GildedRose:
         elif self.name == "Aged Brie":
             return Brie
         elif self.name == "Sulfuras, Hand of Ragnaros":
-            return Sulfuras
+            return Item
         elif self.name == "Backstage passes to a TAFKAL80ETC concert":
             return Backstage
         else:
