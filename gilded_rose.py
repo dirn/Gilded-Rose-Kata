@@ -3,10 +3,12 @@ from typing import Type, Union
 
 
 @dataclass
-class Normal:
+class Item:
     quality: int
     days_remaining: int
 
+
+class Normal(Item):
     def tick(self) -> None:
         self.days_remaining -= 1
         if self.quality == 0:
@@ -17,11 +19,7 @@ class Normal:
             self.quality -= 1
 
 
-@dataclass
-class Brie:
-    quality: int
-    days_remaining: int
-
+class Brie(Item):
     def tick(self) -> None:
         self.days_remaining -= 1
         if self.quality >= 50:
@@ -34,20 +32,12 @@ class Brie:
         self.quality = min(self.quality, 50)
 
 
-@dataclass
-class Sulfuras:
-    quality: int
-    days_remaining: int
-
+class Sulfuras(Item):
     def tick(self) -> None:
         ...
 
 
-@dataclass
-class Backstage:
-    quality: int
-    days_remaining: int
-
+class Backstage(Item):
     def tick(self) -> None:
         self.days_remaining -= 1
         if self.days_remaining < 0:
