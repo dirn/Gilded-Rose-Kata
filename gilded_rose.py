@@ -36,8 +36,7 @@ class Brie(Item):
 
 
 class Sulfuras(Item):
-    def tick(self) -> None:
-        ...
+    ...
 
 
 class Backstage(Item):
