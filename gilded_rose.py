@@ -1,11 +1,14 @@
 from dataclasses import dataclass
-from typing import Type, Union
+from typing import Type
 
 
 @dataclass
 class Item:
     quality: int
     days_remaining: int
+
+    def tick(self) -> None:
+        ...
 
 
 class Normal(Item):
@@ -71,7 +74,7 @@ class GildedRose:
     def tick(self) -> None:
         return self.item.tick()
 
-    def class_for(self, name: str) -> Type[Union[Normal, Brie, Sulfuras, Backstage]]:
+    def class_for(self, name: str) -> Type[Item]:
         if self.name == "normal":
             return Normal
         elif self.name == "Aged Brie":
