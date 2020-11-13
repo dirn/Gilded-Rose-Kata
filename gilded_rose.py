@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Type
 
 
 @dataclass
@@ -53,10 +52,20 @@ class Backstage(Item):
         self.quality = min(self.quality, 50)
 
 
+DEFAULT_CLASS = Item
+SPECIALIZED_CLASSES = {
+    "normal": Normal,
+    "Aged Brie": Brie,
+    "Backstage passes to a TAFKAL80ETC concert": Backstage,
+}
+
+
 class GildedRose:
     def __init__(self, name: str, quality: int, days_remaining: int) -> None:
         self.name = name
-        self.item = self.class_for(name)(quality, days_remaining)
+        self.item = SPECIALIZED_CLASSES.get(name, DEFAULT_CLASS)(
+            quality, days_remaining
+        )
 
     @property
     def quality(self) -> int:
@@ -68,17 +77,3 @@ class GildedRose:
 
     def tick(self) -> None:
         return self.item.tick()
-
-    def class_for(self, name: str) -> Type[Item]:
-        if self.name == "normal":
-            return Normal
-        elif self.name == "Aged Brie":
-            return Brie
-        elif self.name == "Sulfuras, Hand of Ragnaros":
-            return Item
-        elif self.name == "Backstage passes to a TAFKAL80ETC concert":
-            return Backstage
-        else:
-            # This mostly exists to make mypy happy due to an otherwise
-            # missing return.
-            raise ValueError(f"{name} is not a valid item type")
