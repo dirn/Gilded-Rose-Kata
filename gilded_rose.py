@@ -52,11 +52,23 @@ class Backstage(Item):
         self.quality = min(self.quality, 50)
 
 
+class Conjured(Item):
+    def tick(self) -> None:
+        self.days_remaining -= 1
+        if self.quality == 0:
+            return
+
+        self.quality -= 2
+        if self.days_remaining <= 0:
+            self.quality -= 2
+
+
 DEFAULT_CLASS = Item
 SPECIALIZED_CLASSES = {
     "normal": Normal,
     "Aged Brie": Brie,
     "Backstage passes to a TAFKAL80ETC concert": Backstage,
+    "Conjured Mana Cake": Conjured,
 }
 
 

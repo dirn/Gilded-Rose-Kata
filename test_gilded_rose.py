@@ -1,5 +1,3 @@
-import pytest
-
 from gilded_rose import GildedRose
 
 
@@ -203,7 +201,6 @@ def test_backstage_pass_after_sell_date() -> None:
     assert item.days_remaining == -2
 
 
-@pytest.mark.skip()
 def test_conjured_item_before_sell_date() -> None:
     item = GildedRose("Conjured Mana Cake", 10, 5)
     item.tick()
@@ -212,7 +209,6 @@ def test_conjured_item_before_sell_date() -> None:
     assert item.days_remaining == 4
 
 
-@pytest.mark.skip()
 def test_conjured_item_at_zero_quality() -> None:
     item = GildedRose("Conjured Mana Cake", 0, 5)
     item.tick()
@@ -221,7 +217,6 @@ def test_conjured_item_at_zero_quality() -> None:
     assert item.days_remaining == 4
 
 
-@pytest.mark.skip()
 def test_conjured_item_on_sell_date() -> None:
     item = GildedRose("Conjured Mana Cake", 10, 0)
     item.tick()
@@ -230,7 +225,6 @@ def test_conjured_item_on_sell_date() -> None:
     assert item.days_remaining == -1
 
 
-@pytest.mark.skip()
 def test_conjured_item_on_sell_date_at_zero_quality() -> None:
     item = GildedRose("Conjured Mana Cake", 0, 0)
     item.tick()
@@ -239,7 +233,6 @@ def test_conjured_item_on_sell_date_at_zero_quality() -> None:
     assert item.days_remaining == -1
 
 
-@pytest.mark.skip()
 def test_conjured_item_after_sell_date() -> None:
     item = GildedRose("Conjured Mana Cake", 10, -1)
     item.tick()
@@ -248,7 +241,6 @@ def test_conjured_item_after_sell_date() -> None:
     assert item.days_remaining == -2
 
 
-@pytest.mark.skip()
 def test_conjured_item_after_sell_date_at_zero_quality() -> None:
     item = GildedRose("Conjured Mana Cake", 0, -1)
     item.tick()
